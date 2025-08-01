@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>flatlakeTools</title>
+    <link rel="stylesheet" href="/css/site.css">
+    <script type="module" src="https://caltechlibrary.github.io/CL-web-components/src/cl-web-components.js"></script>
+</head>
+<body>
+<nav>
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="index.html">README</a></li>
+    <li><a href="LICENSE">LICENSE</a></li>
+    <li><a href="INSTALL.html">INSTALL</a></li>
+    <li><a href="user_manual.html">User Manual</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="search.html">Search</a></li>
+    <li><a href="https://github.com/caltechlibrary/flatlakeTools">GitHub</a></li>
+</ul>
+</nav>
+<section>
+<h1 id="name">NAME</h1>
+<p>flk</p>
+<h1 id="synopsis">SYNOPSIS</h1>
+<p>flk <a href="#options">OPTIONS</a> CHANNEL_NAME FORMAT
+JSON_INPUT_FILE</p>
+<h1 id="description">DESCRIPTION</h1>
+<p>flk uses a <code>flk.yaml</code> file to configura feeds and
+documents derrived from the <a href="https://flatlake.app">FlatLake</a>
+generated JSON API. It currently supports generating RSS 2.0 feeds and
+CommonMark index pages based on the JSON API.</p>
+<h1 id="options">OPTIONS</h1>
+<p>Options come as the last parameter(s) on the command line.</p>
+<dl>
+<dt>-h, –help</dt>
+<dd>
+display help
+</dd>
+<dt>-v, –version</dt>
+<dd>
+display version
+</dd>
+<dt>-l, –license</dt>
+<dd>
+display license
+</dd>
+</dl>
+<h1 id="config">CONFIG</h1>
+<p>The <code>flk.yaml</code> file is a configuration file used to define
+metadata. <code>flk</code> works with a the concepts of channels. Each
+channel is analogous to a feed when talking about RSS feeds. It also can
+for a listing or index page’s content such as those written in
+CommonMark for a website. The configuration file is written in YAML
+format (a human-readable standard format often used for configuration
+files).</p>
+<p>The top level attribute in <code>flk.yaml</code> is
+<code>channels</code>. It contains a list of channel objects. The
+channel object contains a list of attributes like “name”, “title”,
+“description”, “link”, “language”, “copyright”, “managingEditor”,
+“webMaster”. Each of these are “string” type data. Here is an example of
+a simple <code>flk.yaml</code> file definined one channel named
+“channel_name”.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">channels</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> channel_name</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Channel Title&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Channel Description&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">link</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;https://example.com/channel&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">language</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;en-us&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">copyright</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Copyright Information&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">managingEditor</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;editor@example.com&quot;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">webMaster</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;webmaster@example.com&quot;</span></span></code></pre></div>
+<h2 id="fields">Fields</h2>
+<dl>
+<dt><strong>channels</strong></dt>
+<dd>
+A list of channel configurations. Each channel is represented as an item
+in this list.
+</dd>
+<dt><strong>name</strong></dt>
+<dd>
+A unique identifier for the channel. This is used to reference the
+channel when generating output.
+</dd>
+<dt><strong>title</strong></dt>
+<dd>
+The title of the channel. This is typically the name of the blog or
+website associated with the channel.
+</dd>
+<dt><strong>description</strong></dt>
+<dd>
+A brief description of the channel’s content. This provides users with
+an overview of what the channel is about.
+</dd>
+<dt><strong>link</strong></dt>
+<dd>
+The URL to the website or main page associated with the channel. This
+serves as the base URL for generating absolute links to individual
+items.
+</dd>
+<dt><strong>language</strong></dt>
+<dd>
+(optional) The language in which the channel’s content is written. This
+helps RSS readers and other tools to configure themselves to display
+content correctly.
+</dd>
+<dt><strong>copyright</strong></dt>
+<dd>
+(optional) Information about the copyright for the content in the
+channel. This can include the copyright holder and the year of
+copyright.
+</dd>
+<dt><strong>managingEditor</strong></dt>
+<dd>
+(optional) The email address of the editor responsible for the content
+in the channel. This can be used to contact the editor with questions or
+comments about the content.
+</dd>
+<dt><strong>webMaster</strong></dt>
+<dd>
+(optional) The email address of the person responsible for the technical
+aspects of the channel. This can be used to contact the webmaster with
+technical issues or questions.
+</dd>
+</dl>
+<h1 id="example">Example</h1>
+<p>Here is an example of a complete <code>flk.yaml</code> file with
+multiple channels:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">channels</span><span class="kw">:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> tech_insights</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Tech Insights Blog&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;The latest insights and news from the world of technology.&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">link</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;https://example.com/tech-insights&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">language</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;en-us&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">copyright</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Copyright 2023 Tech Insights Blog. All rights reserved.&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">managingEditor</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;editor@techinsights.com&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">webMaster</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;webmaster@techinsights.com&quot;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> health_tips</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Health Tips Daily&quot;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Daily tips and advice for maintaining a healthy lifestyle.&quot;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">link</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;https://example.com/health-tips&quot;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">language</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;en-us&quot;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">copyright</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Copyright 2023 Health Tips Daily. All rights reserved.&quot;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">managingEditor</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;editor@healthtips.com&quot;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">webMaster</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;webmaster@healthtips.com&quot;</span></span></code></pre></div>
+<h1 id="usage">Usage</h1>
+<h1 id="examples">EXAMPLES</h1>
+<p>In this example I am using a flatlake configuration like this.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">global</span><span class="kw">:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sort_key</span><span class="kw">:</span><span class="at"> datePublished</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sort_direction</span><span class="kw">:</span><span class="at"> desc</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">outputs</span><span class="kw">:</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;single&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;list&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">collections</span><span class="kw">:</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">output_key</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;posts&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">page_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">24</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">sort_key</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;datePublished&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">sort_direction</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;desc&quot;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">single_elements</span><span class="kw">:</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;data&quot;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;content&quot;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">list_elements</span><span class="kw">:</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;data&quot;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;content&quot;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">inputs</span><span class="kw">:</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;./posts&quot;</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">glob</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;**/*{md}&quot;</span></span></code></pre></div>
+<p>I will use the generated <code>api/all/page-1.json</code> file to
+generate the RSS file <code>index.xml</code>.</p>
+<pre class="shell"><code>flatlake
+flt tech_insights rss api/all/page-1.json &gt;tech_insights.xml
+flt tech_insights markdown api/all/page-1.json &gt;tech_insights.md</code></pre>
+</section>
+<footer-global></footer-global>
+</body>
+</html>

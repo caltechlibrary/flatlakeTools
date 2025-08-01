@@ -4,6 +4,7 @@
     "jsr:@std/assert@*": "1.0.13",
     "jsr:@std/assert@^1.0.13": "1.0.13",
     "jsr:@std/internal@^1.0.6": "1.0.9",
+    "jsr:@std/yaml@*": "1.0.9",
     "jsr:@std/yaml@^1.0.9": "1.0.9"
   },
   "jsr": {

@@ -1,40 +1,25 @@
-import { parse } from "@std/yaml";
-import { Post } from './src/metadata.ts';
+// Import the necessary modules
+import { parse } from "jsr:@std/yaml";
+import { Post, RSSFeed } from './src/metadata.ts';
 import { convertToRSS } from './src/converters.ts';
-import { generateRSS } from './src/generators.ts';
-
-interface Channel {
-    name: string;
-    title: string;
-    description: string;
-    link: string;
-    language?: string;
-    copyright?: string;
-    managingEditor?: string;
-    webMaster?: string;
-}
-
-interface FLTConfig {
-    channels: Channel[];
-}
+import { generateRSS, generateCommonMark } from './src/generators.ts';
+import { helpText, fmtHelp } from './helptext.ts';
+import { version, releaseDate, releaseHash, licenseText } from './version.ts';
 
 async function main() {
+    const appName = "flk"
     if (Deno.args.length < 3 || Deno.args.includes("--help") || Deno.args.includes("-h")) {
-        console.log("Usage: deno run --allow-read mod.ts CHANNEL_NAME OUTPUT_FORMAT JSON_INPUT_FILE");
-        console.log("Arguments:");
-        console.log("  CHANNEL_NAME       Name of the channel defined in flt.yaml");
-        console.log("  OUTPUT_FORMAT      Desired output format: 'rss' or 'markdown'");
-        console.log("  JSON_INPUT_FILE    Path to the JSON file containing input data");
+        console.log(fmtHelp(helpText, appName, version, releaseDate, releaseHash));
         return;
     }
 
     if (Deno.args.includes("--license") || Deno.args.includes("-l")) {
-        console.log("This software is licensed under the MIT License.");
+        console.log(licenseText);
         return;
     }
 
     if (Deno.args.includes("--version") || Deno.args.includes("-v")) {
-        console.log("Version 1.0.0");
+        console.log(`${appName} ${version} ${releaseHash}`);
         return;
     }
 
@@ -42,7 +27,7 @@ async function main() {
 
     try {
         const fltYaml = await Deno.readTextFile('flt.yaml');
-        const fltConfig = parse(fltYaml) as FLTConfig;
+        const fltConfig = parse(fltYaml) as { channels: Array<{ name: string } & Partial<RSSFeed>> };
 
         const channelInfo = fltConfig.channels.find(channel => channel.name === channelName);
 
@@ -58,8 +43,8 @@ async function main() {
             const rssXML = generateRSS(rssFeed);
             console.log(rssXML);
         } else if (outputFormat === 'markdown') {
-            // Implement markdown generation logic here
-            console.log("Markdown output format is not yet implemented.");
+            const commonMark = generateCommonMark(rssFeed);
+            console.log(commonMark);
         } else {
             throw new Error("Invalid output format. Use 'rss' or 'markdown'.");
         }
