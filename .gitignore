@@ -1,0 +1,6 @@
+*~
+*.bak
+*.swp
+*.tmp
+bin/*
+dist/*
