@@ -9,7 +9,7 @@ PROJECT = flatlakeTools
 
 PACKAGE = flatlakeTools
 
-PROGRAMS = flatlakeRSS2 flatlakeBlogIndex
+PROGRAMS = flt
 
 GIT_GROUP = caltechlibrary
 

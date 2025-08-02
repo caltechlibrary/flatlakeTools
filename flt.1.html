@@ -31,20 +31,9 @@ generated JSON API. It currently supports generating RSS 2.0 feeds and
 CommonMark index pages based on the JSON API.</p>
 <h1 id="options">OPTIONS</h1>
 <p>Options come as the last parameter(s) on the command line.</p>
-<dl>
-<dt>-h, –help</dt>
-<dd>
-display help
-</dd>
-<dt>-v, –version</dt>
-<dd>
-display version
-</dd>
-<dt>-l, –license</dt>
-<dd>
-display license
-</dd>
-</dl>
+<p>-h, –help : display help</p>
+<p>-v, –version : display version</p>
+<p>-l, –license : display license</p>
 <h1 id="config">CONFIG</h1>
 <p>The <code>flk.yaml</code> file is a configuration file used to define
 metadata. <code>flk</code> works with a the concepts of channels. Each
@@ -71,58 +60,30 @@ class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">managingEditor</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;editor@example.com&quot;</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">webMaster</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;webmaster@example.com&quot;</span></span></code></pre></div>
 <h2 id="fields">Fields</h2>
-<dl>
-<dt><strong>channels</strong></dt>
-<dd>
-A list of channel configurations. Each channel is represented as an item
-in this list.
-</dd>
-<dt><strong>name</strong></dt>
-<dd>
-A unique identifier for the channel. This is used to reference the
-channel when generating output.
-</dd>
-<dt><strong>title</strong></dt>
-<dd>
-The title of the channel. This is typically the name of the blog or
-website associated with the channel.
-</dd>
-<dt><strong>description</strong></dt>
-<dd>
-A brief description of the channel’s content. This provides users with
-an overview of what the channel is about.
-</dd>
-<dt><strong>link</strong></dt>
-<dd>
-The URL to the website or main page associated with the channel. This
-serves as the base URL for generating absolute links to individual
-items.
-</dd>
-<dt><strong>language</strong></dt>
-<dd>
-(optional) The language in which the channel’s content is written. This
-helps RSS readers and other tools to configure themselves to display
-content correctly.
-</dd>
-<dt><strong>copyright</strong></dt>
-<dd>
-(optional) Information about the copyright for the content in the
-channel. This can include the copyright holder and the year of
-copyright.
-</dd>
-<dt><strong>managingEditor</strong></dt>
-<dd>
-(optional) The email address of the editor responsible for the content
-in the channel. This can be used to contact the editor with questions or
-comments about the content.
-</dd>
-<dt><strong>webMaster</strong></dt>
-<dd>
-(optional) The email address of the person responsible for the technical
-aspects of the channel. This can be used to contact the webmaster with
-technical issues or questions.
-</dd>
-</dl>
+<p><strong>channels</strong> : A list of channel configurations. Each
+channel is represented as an item in this list.</p>
+<p><strong>name</strong> : A unique identifier for the channel. This is
+used to reference the channel when generating output.</p>
+<p><strong>title</strong> : The title of the channel. This is typically
+the name of the blog or website associated with the channel.</p>
+<p><strong>description</strong> : A brief description of the channel’s
+content. This provides users with an overview of what the channel is
+about.</p>
+<p><strong>link</strong> : The URL to the website or main page
+associated with the channel. This serves as the base URL for generating
+absolute links to individual items.</p>
+<p><strong>language</strong> : (optional) The language in which the
+channel’s content is written. This helps RSS readers and other tools to
+configure themselves to display content correctly.</p>
+<p><strong>copyright</strong> : (optional) Information about the
+copyright for the content in the channel. This can include the copyright
+holder and the year of copyright.</p>
+<p><strong>managingEditor</strong> : (optional) The email address of the
+editor responsible for the content in the channel. This can be used to
+contact the editor with questions or comments about the content.</p>
+<p><strong>webMaster</strong> : (optional) The email address of the
+person responsible for the technical aspects of the channel. This can be
+used to contact the webmaster with technical issues or questions.</p>
 <h1 id="example">Example</h1>
 <p>Here is an example of a complete <code>flk.yaml</code> file with
 multiple channels:</p>
