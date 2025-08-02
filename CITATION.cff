@@ -12,7 +12,7 @@ authors:
 
 
 repository-code: "https://github.com/caltechlibrary/flatlakeTools"
-version: 0.0.0
+version: 0.0.1
 
 
 license-url: "https://caltechlibrary.github.io/flatlakeTools/LICENSE"

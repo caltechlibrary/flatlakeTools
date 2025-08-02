@@ -34,10 +34,10 @@
     "GNU Make >= 3",
     "FlatLake >= 0.4.3"
   ],
-  "version": "0.0.0",
+  "version": "0.0.1",
   "developmentStatus": "concept",
   "issueTracker": "https://github.com/caltechlibrary/flatlakeTools/issues",
-  "releaseNotes": "This is a proof of concept",
+  "releaseNotes": "working proof of concept.",
   "copyrightYear": 2025,
   "copyrightHolder": "California Institute of Technology"
 }
