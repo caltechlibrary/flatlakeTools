@@ -2,6 +2,7 @@
 *.bak
 *.swp
 *.tmp
+flt.yaml
 bin/*
 dist/*
 man/*

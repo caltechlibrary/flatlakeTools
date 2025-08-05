@@ -1,8 +1,8 @@
 // flatlakeTools version and license information.
 
-export const version: string = '0.0.1',
-releaseDate: string = '2025-08-01',
-releaseHash: string = '96b8625',
+export const version: string = '0.0.2',
+releaseDate: string = '2025-08-04',
+releaseHash: string = '001ac81',
 licenseText: string = `
 
 Copyright (c) 2025, Caltech

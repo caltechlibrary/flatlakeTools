@@ -13,7 +13,7 @@ Deno.test("convertToRSS should convert posts to RSS feed correctly", () => {
         title: "Test title",
         datePublished: "2023-01-01",
       },
-      url: "test-url"
+      url: "test-url",
     },
   ];
 

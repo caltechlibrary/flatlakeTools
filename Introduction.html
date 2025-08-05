@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>flatlakeTools</title>
+    <link rel="stylesheet" href="/css/site.css">
+    <script type="module" src="https://caltechlibrary.github.io/CL-web-components/src/cl-web-components.js"></script>
+</head>
+<body>
+<nav>
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="index.html">README</a></li>
+    <li><a href="LICENSE">LICENSE</a></li>
+    <li><a href="INSTALL.html">INSTALL</a></li>
+    <li><a href="user_manual.html">User Manual</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="search.html">Search</a></li>
+    <li><a href="https://github.com/caltechlibrary/flatlakeTools">GitHub</a></li>
+</ul>
+</nav>
+<section>
+<h1 id="introduction-to-flatlaketools">Introduction to
+flatlakeTools</h1>
+<p><a
+href="https://github.com/caltechlibrary/flatlakeTools">flatlakeTools</a>
+is an experimental set of tools for exploring and using CloudCannon’s <a
+href="https://flatlake.app">FlatLake</a> application for deploying a
+simple blog. FlatLake will redirect a directory structure full of
+CommonMark (Markdown) documents processing their <a href="">front
+matter</a> and aggregating the results into a static JSON API. This JSON
+API is has sufficient data to render RSS and a simple blog index page.
+The flatlakeTools fills in the gaps for managing the CommonMark
+documents and leveraging the index page and RSS file. You can then use
+Pandoc to convert the CommonMark documents into HTML. You can then use
+PageFind to generate search indexes to make your blog searchable. The
+result is static website ready to deploy.</p>
+<h2 id="requirements">Requirements</h2>
+<p>You’ll need the following to follow along.</p>
+<ul>
+<li><a href="https://flatlake.app">FlatLake</a></li>
+<li><a href="https://pagefind.app">PageFind</a></li>
+<li><a href="https://pandoc.org">Pandoc</a></li>
+<li><a
+href="https://github.com/caltechlibrary/flatlakeTools/releases">flatLakeTools</a></li>
+<li>A text editor</li>
+<li>A web browser</li>
+</ul>
+<h2 id="deno-steps">Deno steps</h2>
+<ol type="1">
+<li>After installing the required software create a directory for
+staging the blog, change in the directory</li>
+<li>create a YAML configuration file for FlatLake (see example in this
+document)</li>
+<li>create a YAML configuration for the <code>flt</code> command in
+flatlakeTools</li>
+<li>Write a blog posts in CommonMark (markdown) include front matter for
+title, abstrasct, datePublished, and author</li>
+<li>Use the <code>flt</code> command to “blogit” into the blog directory
+tree.</li>
+<li>Create/update the JSON API using the FlateLake command</li>
+<li>Generate the blog index page using the <code>flt</code> command</li>
+<li>Create a CommonMark search page</li>
+<li>Using Pandoc turn all the CommonMark documents into HTML</li>
+<li>Using PageFind to generate search indexes</li>
+<li>Use PageFind to server the test site</li>
+</ol>
+<h3 id="setting-up-the-directory-and-configuration">Setting up the
+directory and configuration</h3>
+<pre class="shell"><code>mkdir site
+cd site
+edit flatlake.yaml
+edit flt.yaml</code></pre>
+<p>The <code>flatlake.yaml</code> file should look something like
+this.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">global</span><span class="kw">:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sort_key</span><span class="kw">:</span><span class="at"> datePublished</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">sort_direction</span><span class="kw">:</span><span class="at"> desc</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">outputs</span><span class="kw">:</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;single&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;list&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">collections</span><span class="kw">:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">output_key</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;posts&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">page_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">24</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">sort_key</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;datePublished&quot;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">sort_direction</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;desc&quot;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">single_elements</span><span class="kw">:</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;data&quot;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;content&quot;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">list_elements</span><span class="kw">:</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;data&quot;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;content&quot;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">inputs</span><span class="kw">:</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;./posts&quot;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">glob</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;**/*{md}&quot;</span></span></code></pre></div>
+<p>The <code>flt.yaml</code> file should look something like this.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at"> posts hold the path used for your blog.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">blog</span><span class="kw">:</span><span class="at"> posts</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The base URL for your website, we&#39;re using the PageFind server address</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">base_url</span><span class="kw">:</span><span class="at"> http://localhost:1414</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># channel is used to generate an RSS Feed and you blogs</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># CommonMark index page.</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">channels</span><span class="kw">:</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> posts</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Posts&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Blog posts&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">link</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;http://localhost:1414/index.rss&quot;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">language</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;en-us&quot;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">    ## copyright: &quot;&quot;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">    ## managingEditor: &quot;editor@example.edu&quot;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">    ## webMaster: &quot;webmaster@example.edu&quot;</span></span></code></pre></div>
+<p>NOTE: the link is pointing to the RSS on our test system. Normally
+this would be the name of your website.</p>
+<h3 id="write-a-blog-post">Write a blog post</h3>
+<p>For this demo the blog post can be a short hello world document.
+Here’s my example, “hello.md”</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Hello World</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">abstract:</span><span class="co"> This is a simple Hello World demo</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="an">datePublished:</span><span class="co"> &#39;2025-08-04&#39;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> &#39;j.doe@example.edu (J. Doe)&#39;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu"># Hello World</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>Hi there!</span></code></pre></div>
+<p>Note where you save this someplace like
+<code>$HOME/Documents/hello.md</code>. You need to remember the path we
+we’ll use it when we public the CommonMark document into the blog
+directory tree.</p>
+<h3 id="adding-our-first-blog-post-and-staging-our-site">Adding our
+first blog post and staging our site</h3>
+<p>In the directory you’ve created previous for staging your site you’ll
+use the <code>flt</code> command to add the CommonMark document you
+created in <code>$HOME/Documents/hello.md</code> into the blog. The
+<code>flt</code> action you’ll be using is called “blogit”. It will
+first check to make sure the CommonMark document has the expected front
+matter then if it is OK it’ll copy it into the blog tree (i.e. “posts”
+directory.)</p>
+<pre class="shell"><code>flt blogit $HOME/Documents/hello.md</code></pre>
+<p>If all went well you should see a message like this.</p>
+<pre><code>File published to posts/2025/08/04/hello.md</code></pre>
+<p>This will create the posts directory structure and copy the
+“hello.md” CommonMark document into place.</p>
+<pre><code>/ (site root)
+  - posts
+    - 2025
+      - 08
+        - 04
+          hello.md</code></pre>
+<p>Now let’s run FlatLake to update the JSON API.</p>
+<pre class="shell"><code>flatlake</code></pre>
+<p>You should see output that looks like this.</p>
+<pre><code>flatlake running as 0.4.3
+
+[Walking collections]
+finished running flatlake
+
+Finished in 0.009 seconds</code></pre>
+<p>Looking at the directory now, you should see a directory called
+<code>api</code> along side the <code>posts</code> you previously create
+in your site root. That <code>api</code> directory holds a the JSON API
+that will be used by <code>flt</code> to create your blog’s index page
+and the blog’s RSS feed. Let’s create those files next.</p>
+<pre class="shell"><code>flt markdown posts api/posts/all/page-1.json &gt;index.md
+flt rss posts api/posts/all/page-1.json &gt;index.rss</code></pre>
+<p>Now we’re ready to create the search page. I’ve included a simple
+version below, called it “search.md” in the site root.</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># Search</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;/pagefind/pagefind-ui.css&quot;</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;stylesheet&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;/pagefind/pagefind-ui.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;search&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="kw">new</span> <span class="fu">PagefindUI</span>({</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">element</span><span class="op">:</span> <span class="st">&quot;#search&quot;</span><span class="op">,</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">highlightParam</span><span class="op">:</span> <span class="st">&quot;highlight&quot;</span><span class="op">,</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">mergeIndex</span><span class="op">:</span> [</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>            <span class="dt">bundlePath</span><span class="op">:</span> <span class="st">&quot;./pagefind&quot;</span><span class="op">,</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>            <span class="dt">baseUrl</span><span class="op">:</span> <span class="st">&quot;/&quot;</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<h3 id="rendering-html-and-testing-it">Rendering HTML and testing
+it</h3>
+<p>Right now our blog has three CommonMark documents,
+“posts/2025/08/04/hello.md”, “search.md” and “index.md”. We can use
+Pandoc to convert those to HTML files.</p>
+<pre class="shell"><code>pandoc -f markdown -t html5 -s -o posts/2025/08/04/hello.html posts/2025/08/04/hello.md
+pandoc -f markdown -t html5 -s -o search.html search.md
+pandoc -f markdown -t html5 -s -o index.html index.md</code></pre>
+<p>Now we can generate the search indexes and test our website.</p>
+<pre class="shell"><code>pagefind  -v -s . --serve
+open http://localhost:1414</code></pre>
+<p>You can now fire up your localhost web server and view your handy
+work.</p>
+</section>
+<footer-global></footer-global>
+</body>
+</html>

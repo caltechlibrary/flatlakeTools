@@ -12,8 +12,8 @@ authors:
 
 
 repository-code: "https://github.com/caltechlibrary/flatlakeTools"
-version: 0.0.1
-
+version: 0.0.2
+date-released: 2025-08-04
 
 license-url: "https://caltechlibrary.github.io/flatlakeTools/LICENSE"
 keywords:

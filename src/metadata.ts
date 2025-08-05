@@ -1,3 +1,8 @@
+export interface FltConfig {
+  blog: string;
+  channels: Array<{ name: string } & Partial<RSSFeed>>;
+}
+
 export interface Post {
   content: string;
   data: {

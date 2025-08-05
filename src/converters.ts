@@ -1,26 +1,26 @@
-import * as path from '@std/path';
+import * as path from "@std/path";
 import { Post, RSSFeed, RSSItem } from "./metadata.ts";
 
 function channelLinkToBaseUrl(link: string): string {
-	const u = new URL(link);
-	const p = path.dirname(u.pathname);
-	u.pathname = p;
-	return u.toString();
+  const u = new URL(link);
+  const p = path.dirname(u.pathname);
+  u.pathname = p;
+  return u.toString();
 }
 
-function jsonLinkToHtmlLink(link: string | URL) : string | URL {
-	let dname: string = '';
-	let bname: string = '';
-	if (link instanceof URL) {
-		dname = path.dirname(link.pathname);
-		bname = path.basename(link.pathname).replace(/\.json$/g, '.html');
-		link.pathname = path.join(dname, bname);
-		return link
-	} else {
-		dname = path.dirname(link);
-		bname = path.basename(link).replace(/\.json$/g, '.html');
-		return path.join(dname, bname);
-	}
+function jsonLinkToHtmlLink(link: string | URL): string | URL {
+  let dname: string = "";
+  let bname: string = "";
+  if (link instanceof URL) {
+    dname = path.dirname(link.pathname);
+    bname = path.basename(link.pathname).replace(/\.json$/g, ".html");
+    link.pathname = path.join(dname, bname);
+    return link;
+  } else {
+    dname = path.dirname(link);
+    bname = path.basename(link).replace(/\.json$/g, ".html");
+    return path.join(dname, bname);
+  }
 }
 
 export function convertToRSS(
@@ -42,7 +42,8 @@ export function convertToRSS(
 
   posts.forEach((post) => {
     // Combine the base URL with the post URL to form an absolute URL
-    const absoluteUrl: string = new URL(jsonLinkToHtmlLink(post.url), baseUrl).toString();
+    const absoluteUrl: string = new URL(jsonLinkToHtmlLink(post.url), baseUrl)
+      .toString();
 
     const item: RSSItem = {
       title: post.data.title,

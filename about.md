@@ -9,7 +9,7 @@ authors:
 
 
 repository_code: https://github.com/caltechlibrary/flatlakeTools
-version: 0.0.1
+version: 0.0.2
 license_url: https://caltechlibrary.github.io/flatlakeTools/LICENSE
 
 programming_language:
@@ -20,15 +20,15 @@ keywords:
   - FlatLake
   - JSON
 
-
+date_released: 2025-08-04
 ---
 
 About this software
 ===================
 
-## flatlakeTools 0.0.1
+## flatlakeTools 0.0.2
 
-working proof of concept.
+working proof of concept supporting RSS and Markdown generations as well as copying a CommonMark document into the blog directory string after validation.
 
 ### Authors
 

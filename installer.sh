@@ -1,11 +1,11 @@
 #!/bin/sh
-# generated with CMTools 0.0.1 96b8625
+# generated with CMTools 0.0.2 001ac81
 
 #
 # Set the package name and version to install
 #
 PACKAGE="flatlakeTools"
-VERSION="0.0.1"
+VERSION="0.0.2"
 GIT_GROUP="caltechlibrary"
 RELEASE="https://github.com/$GIT_GROUP/$PACKAGE/releases/tag/v$VERSION"
 if [ "$PKG_VERSION" != "" ]; then

@@ -10,7 +10,7 @@ Deno.test("Post structure should match expected format", () => {
       keywords: ["test", "example"],
       title: "Test title",
     },
-    url: "test-url"
+    url: "test-url",
   };
 
   assertEquals(post.content, "Test content");
