@@ -63,5 +63,6 @@ This is an experimental proof of concept set of tools for working with the FlatL
 - Pandoc &gt;&#x3D; 3.5
 - GNU Make &gt;&#x3D; 3
 - FlatLake &gt;&#x3D; 0.4.3
+- PageFind &gt;&#x3D; 1.3.0
 
 

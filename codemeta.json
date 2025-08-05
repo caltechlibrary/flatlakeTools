@@ -33,7 +33,8 @@
   "softwareSuggestions": [
     "Pandoc >= 3.5",
     "GNU Make >= 3",
-    "FlatLake >= 0.4.3"
+    "FlatLake >= 0.4.3",
+	"PageFind >= 1.3.0"
   ],
   "version": "0.0.2",
   "developmentStatus": "concept",

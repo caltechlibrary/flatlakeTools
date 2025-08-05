@@ -12,26 +12,28 @@ an action and data source path to produce the desired content via standard out.
 Here's the basic form of the command.
 
 ```
-flt CHANNEL_NAME OUTPUT_FORMAT
+flt blogit COMMONMARK_FILE
+flt rss CHANNEL_NAME JSON_API_FILE
+flt markdown CHANNEL_NAME JSON_API_FILE
 ```
 
-Here's an example of rendering a RSS 2.0 `index.xml` file.
+Here's an example of rendering a RSS 2.0 `rss.xml` for the "posts" channel.
 
 ```shell
-flt index rss api/all/page-1.json >index.xml
+flt rss posts api/all/page-1.json >rss.xml
 ```
 
-Here's an example of rendering a CommonMark index file suitable for a blog.
+Here's an example of rendering a CommonMark `index.md` file suitable for a blog index using the "posts" channel.
 
 ```shell
-flt index markdown api/all/page-1.json >index.md
+flt markdown posts api/all/page-1.json >index.md
 ```
 
 The `flt.yaml` file might look something like this.
 
 ```yaml
 channels:
-  - name: index
+  - name: posts
     title: "Tech Insights Blog"
     description: "The latest insights and news from the world of technology."
     link: "https://example.com/tech-insights"
@@ -43,7 +45,7 @@ channels:
 
 ## Release Notes
 
-- version: 0.0.0
+- version: 0.0.2
 - status: concept
 
 This is a proof of concept
@@ -62,6 +64,7 @@ This is a proof of concept
 - Pandoc &gt;&#x3D; 3.5
 - GNU Make &gt;&#x3D; 3
 - FlatLake &gt;&#x3D; 0.4.3
+- PageFind &gt;&#x3D; 1.3.0
 
 #### Runtime platform
 
