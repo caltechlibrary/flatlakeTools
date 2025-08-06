@@ -1,0 +1,18 @@
+{
+  "page": 1,
+  "total_pages": 1,
+  "has_more": false,
+  "next_page": null,
+  "values": [
+    {
+      "content": "\n# Hello World\n\nHi there!\n\n",
+      "data": {
+        "abstract": "This is a simple Hello World demo",
+        "author": "j.doe@example.edu (J. Doe)",
+        "datePublished": "2025-08-04",
+        "title": "Hello World"
+      },
+      "url": "posts/2025/08/04/hello.json"
+    }
+  ]
+}
